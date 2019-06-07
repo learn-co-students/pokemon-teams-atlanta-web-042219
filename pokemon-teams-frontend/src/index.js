@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	function delete_pokemon(button) {
 		fetch(`http://localhost:3000/pokemons/${button.dataset.pokemonId}`,{ method: 'DELETE' })
-		.then(button.parentElement.remove())
+		.then(resp => { if(!resp.errors) button.parentElement.remove() })
 		.catch(error => console.log('Error during DELETE: ', error))
 	}
 
