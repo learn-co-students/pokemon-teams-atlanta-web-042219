@@ -26,32 +26,28 @@ document.addEventListener('DOMContentLoaded', function(){
 			  <ul>
 			    ${poke_li}
 			  </ul>
-			</div>
-		`
+			</div>`
 	}
 
 	function handleClickEvents(e) {
-		if (e.target.className === 'add_pokemon_btn') add_pokemon(e.target.parentElement)
+		if (e.target.className === 'add_pokemon_btn') add_pokemon(e.target)
 		else if (e.target.className === 'release') delete_pokemon(e.target)
 	}
 
-	function add_pokemon(trainer_div) {
+	function add_pokemon(add_btn) {
 		fetch('http://localhost:3000/pokemons',{
-	    method: 'POST',
-	    headers: {
-	      'Content-Type':'application/json',
-	      Accept: 'application/json'
-	    },
-	    body: JSON.stringify( {trainer_id: trainer_div.dataset.id} )
+			method: 'POST',
+	    headers: { 'Content-Type':'application/json' },
+	    body: JSON.stringify( {trainer_id: add_btn.dataset.trainerId} )
 		})
 		.then(resp => resp.json())
-		.then(pm => { pm.error ? alert(pm.error) : trainer_div.children[2].innerHTML += `<li>${pm.nickname} (${pm.species}) <button class="release" data-pokemon-id="${pm.id}">Release</button></li>`})
+		.then(pm => { pm.error ? alert(pm.error) : add_btn.nextSibling.nextSibling.innerHTML += `<li>${pm.nickname} (${pm.species}) <button class="release" data-pokemon-id="${pm.id}">Release</button></li>`})
 		.catch(error => console.log('Error during POST: ', error))
 	}
 
-	function delete_pokemon(button) {
-		fetch(`http://localhost:3000/pokemons/${button.dataset.pokemonId}`,{ method: 'DELETE' })
-		.then(resp => { if(!resp.errors) button.parentElement.remove() })
+	function delete_pokemon(del_btn) {
+		fetch(`http://localhost:3000/pokemons/${del_btn.dataset.pokemonId}`,{ method: 'DELETE' })
+		.then(resp => { if(!resp.errors) del_btn.parentElement.remove() })
 		.catch(error => console.log('Error during DELETE: ', error))
 	}
 
