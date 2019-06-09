@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showTrainers(trainer){
     let pokemonLi = ''
-    trainer.pokemons.forEach(pokemon => {
-      pokemonLi += `<li> ${pokemon.nickname} (${pokemon.species}) <button class="release" data-pokemon-id=${pokemon.id}>Release</button></li>`
+    trainer.pokemons.forEach(pokemon => {pokemonLi +=
+      `<li> ${pokemon.nickname} (${pokemon.species}) <button class="release" data-pokemon-id=${pokemon.id}>Release</button></li>`
     })
 
     main.innerHTML +=
